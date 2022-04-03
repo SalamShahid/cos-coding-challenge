@@ -1,0 +1,7 @@
+{
+  "name": "cos-ionic-coding-challenge",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
