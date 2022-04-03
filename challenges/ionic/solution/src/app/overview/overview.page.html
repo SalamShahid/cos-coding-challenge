@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Auction Overview</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let auction of details">
+    <img class="img" src={{auction.basicVehicleInformation.vehicleImageUrl}} />
+    <ion-card-header class="card-header">
+      <ion-grid class="no-padding">
+        <ion-row>
+          <ion-col class="no-padding" size="4">
+            <ion-card-subtitle>{{auction.remainingTime}}</ion-card-subtitle>
+          </ion-col>
+          <ion-col class="no-padding" size="8">
+            <ion-card-subtitle class="align-right">Höchstes Gebot:
+              {{auction.currentHighestBidValue}}&euro;
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-card-subtitle *ngIf="auction.amIHighestBidder">Sie sind Höchstbietender</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="!auction.amIHighestBidder">Sie sind nicht der Höchstbietende</ion-card-subtitle>
+      <ion-card-title class="card-title">{{auction.label}}</ion-card-title>
+    </ion-card-header>
+    <ion-grid class="no-padding">
+      <ion-row>
+        <ion-col class="no-padding" *ngIf="auction.basicVehicleInformation.mileageInKm > -1">
+          <ion-card-content class="no-padding-right veehicleDetails">
+            {{auction.basicVehicleInformation.mileageInKm}} km
+          </ion-card-content>
+        </ion-col>
+        <ion-col class="no-padding">
+          <ion-card-content class="veehicleDetails">
+            {{auction.basicVehicleInformation.ez}}
+          </ion-card-content>
+        </ion-col>
+        <ion-col class="no-padding" *ngIf="auction.basicVehicleInformation.fuelType != 'Unavailable'">
+          <ion-card-content class="align-right veehicleDetails">
+            {{auction.basicVehicleInformation.fuelType}}
+          </ion-card-content>
+        </ion-col>
+        <ion-col class="no-padding" *ngIf="auction.basicVehicleInformation.transmission != 'Unavailable'">
+          <ion-card-content class="align-right veehicleDetails">
+            {{auction.basicVehicleInformation.transmission}}
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

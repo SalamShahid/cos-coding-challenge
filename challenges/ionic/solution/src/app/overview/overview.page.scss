@@ -1,0 +1,28 @@
+.card-title {
+  font-size: 16px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-padding-right {
+  padding-right: 0;
+}
+
+.align-right {
+  float: right;
+}
+
+.card-header {
+  padding-top: 14px;
+}
+
+.img {
+  width: 100%;
+}
+
+//iOS specific styling.
+.ios .veehicleDetails {
+  font-size: 13px;
+}
