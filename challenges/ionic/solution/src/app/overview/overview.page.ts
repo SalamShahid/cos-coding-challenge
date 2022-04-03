@@ -53,7 +53,11 @@ export class OverviewPage implements OnInit {
     this.routing.runningAuctionsByBuyer(filter, false).subscribe(
       (response) => {
         //Infinite scroll settings
-        if (response.total <= this.limit) this.infiniteScroll.disabled = true;
+        if (response.total <= this.limit) {
+          this.infiniteScroll.disabled = true;
+        } else {
+          this.infiniteScroll.disabled = false;
+        }
         if (isFirstLoad) {
           event.target.complete();
         } else {
@@ -72,7 +76,6 @@ export class OverviewPage implements OnInit {
         this.clearTimeOutId = setTimeout(() => {
           this.offset = 0;
           this.limit = 4;
-          this.infiniteScroll.disabled = false;
           this.getRunningAuctions(false, '');
         }, 20000);
       },
