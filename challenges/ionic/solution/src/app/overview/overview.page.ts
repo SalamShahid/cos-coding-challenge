@@ -52,6 +52,15 @@ export class OverviewPage implements OnInit {
     var filter = '{"offset":' + this.offset + ',"limit":' + this.limit + '}';
     this.routing.runningAuctionsByBuyer(filter, false).subscribe(
       (response) => {
+        //Infinite scroll settings
+        if (response.total <= this.limit) this.infiniteScroll.disabled = true;
+        if (isFirstLoad) {
+          event.target.complete();
+        } else {
+          this.details = [];
+        }
+        this.offset = this.offset + this.limit;
+        this.limit = this.limit + this.limit;
         response.items.forEach((element) => {
           this.details.push(new AuctionOverview(element));
         });
@@ -61,18 +70,11 @@ export class OverviewPage implements OnInit {
         if (!this.validation.isNullOrUndefined(this.clearTimeOutId))
           clearTimeout(this.clearTimeOutId);
         this.clearTimeOutId = setTimeout(() => {
-          this.details = [];
           this.offset = 0;
           this.limit = 4;
           this.infiniteScroll.disabled = false;
           this.getRunningAuctions(false, '');
         }, 20000);
-
-        //Infinite scroll settings
-        if (isFirstLoad) event.target.complete();
-        if (response.total <= this.limit) this.infiniteScroll.disabled = true;
-        this.offset = this.offset + this.limit;
-        this.limit = this.limit + this.limit;
       },
       (error) => {
         this.loading.dismiss();
